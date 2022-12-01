@@ -173,7 +173,9 @@ public:
     Iterator begin() {
         return Iterator(first);
     }
-
+    Iterator end() {
+        return Iterator(last);
+    }
     /////////////////////////////////////////////////СОРТИРОВКИ//////////////////////////////////////////////
 
 public:
@@ -270,5 +272,33 @@ public:
             current->set_next() = (trail->get_next())->get_next();
             j = 0;
         }
+    }
+    //БЫСТРАЯ СОРТИРОВКА
+    Iterator partition(Iterator head, Iterator tail, bool(*comparator)(const T&, const T&)) {
+        Iterator pivot = head;
+        Iterator curr = head;
+        while ((curr != nullptr) && (curr != tail)) {
+            if (comparator(curr.operator*(), tail.operator*())) {
+                pivot = head;
+                T temp = head.operator*();
+                head.elem->set_data(curr.operator*());
+                curr.elem->set_data(temp);
+                ++head;
+            }
+            ++curr;
+        }
+        T temp = head.operator*();
+        head.elem->set_data(tail.operator*());
+        tail.elem->set_data(temp);
+        return pivot;
+    }
+    void quick_sort(Iterator head, Iterator tail, bool(*comparator)(const T&, const T&)) {
+        if (head == tail) { return; }
+        Iterator pivot = partition(head, tail, comparator);
+        quick_sort(pivot.elem->get_next(), tail, comparator);
+        quick_sort(head, pivot, comparator);
+    }
+    void _quick_sort(bool(*comparator)(const T&, const T&)) {
+        quick_sort(first, last, comparator);
     }
 };

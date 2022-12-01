@@ -48,3 +48,11 @@ template <class T>
 void ListSequence<T>::merge_sort_(bool (*comparator)(const T &, const T &)) {
     this->linkedlist->merge_sort_(comparator);
 }
+template <class T>
+void ListSequence<T>::bubble_sort() {
+    this->linkedlist->bubble_sort();
+}
+template <class T>
+void ListSequence<T>::_quick_sort(bool (*comparator)(const T &, const T &)) {
+    this->linkedlist->_quick_sort(comparator);
+}

@@ -11,5 +11,6 @@ public:
     virtual void insert_at(T item, int index) = 0;
     virtual Sequence<T>* concat(Sequence<T>* list) = 0;
     virtual void merge_sort_(bool(*comparator)(const T&, const T&)) = 0;
-    virtual void bubble_sort () = 0;
+    virtual void bubble_sort() = 0;
+    virtual void _quick_sort(bool(*comparator)(const T&, const T&)) = 0;
 };

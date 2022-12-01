@@ -20,4 +20,5 @@ public:
     Sequence<T>* concat(Sequence<T>* list) override;
     void merge_sort_(bool(*comparator)(const T&, const T&)) override;
     void bubble_sort() override;
+    void _quick_sort(bool(*comparator)(const T&, const T&)) override;
 };

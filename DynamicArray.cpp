@@ -92,12 +92,77 @@ public:
 
     ///////////////////////////////////////////////СОРТИРОВКИ//////////////////////////////////////////////
 
+    ArrayIterator find_middle (ArrayIterator begin, ArrayIterator end) {
+        if (begin == nullptr) { return nullptr; }
+        if(begin == end) { return end; }
+        ArrayIterator s = begin, f = begin;
+        ++f;
+        while (f != end) {
+            ++f;
+            if (f != end) {
+                ++s;
+                ++f;
+            }
+            else ++s;
+        }
+        return s;
+    }
+    int real_index (ArrayIterator elem) {
+        int counter = 0;
+        for (ArrayIterator ptr = array; ptr < end(); ++ptr) {
+            if (ptr == elem) { return counter - 1; }
+            ++counter;
+        }
+        return -1;
+    }
+
     //СЛИЯНИЕМ
     void merge(ArrayIterator start, ArrayIterator middle, ArrayIterator end, bool(*comparator)(const T&, const T&)) {
-
+        ArrayIterator front_trail = middle;
+        int real = real_index(middle);
+        ++front_trail;
+        ArrayIterator first_subarray_length = middle;
+        ArrayIterator second_subarray_length = end;
+        ArrayIterator first_subarray_index = start;
+        ArrayIterator second_subarray_index = front_trail;
+        int merged_array_index;
+        T* merged_array = new T[real_index(end) + 1];
+        while (first_subarray_index <= first_subarray_length && second_subarray_index <= second_subarray_length) {
+            if (comparator(second_subarray_index.operator*(), first_subarray_index.operator*())) {
+                *(merged_array + merged_array_index) = first_subarray_index.operator*();
+                ++first_subarray_index;
+            }
+            else {
+                *(merged_array + merged_array_index) = first_subarray_index.operator*();
+                ++first_subarray_index;
+            }
+            ++merged_array_index;
+        }
+        while (first_subarray_index <= first_subarray_length) {
+            *(merged_array + merged_array_index) = first_subarray_index.operator*();
+            ++first_subarray_index;
+            ++merged_array_index;
+        }
+        while (second_subarray_index <= second_subarray_length) {
+            *(merged_array + merged_array_index) = second_subarray_index.operator*();
+            ++second_subarray_index;
+            ++merged_array_index;
+        }
+        int counter = 0;
+        for (ArrayIterator ptr = start; ptr <= end; ++ptr) {
+            *(ptr.elem) = *(merged_array + counter);
+            ++counter;
+        }
     }
     void merge_sort(ArrayIterator begin, ArrayIterator end, bool(*comparator)(const T&, const T&)) {
-
+        if (begin <= end) {
+            ArrayIterator middle = find_middle(begin, end);
+            ArrayIterator temp = middle;
+            ++temp;
+            merge_sort(begin, middle, comparator);
+            merge_sort(temp, end, comparator);
+            merge(begin, middle, end, comparator);
+        }
     }
     void merge_sort_(bool(*comparator)(const T&, const T&)) {
         merge_sort(begin(), end(), comparator);
@@ -114,5 +179,39 @@ public:
                 }
             }
         }
+    }
+    //БЫСТРАЯ СОРТИРОВКА
+    ArrayIterator partition(ArrayIterator l, ArrayIterator pivot, bool(*comparator)(const T&, const T&)) {
+        T piv = pivot.operator*();
+        ArrayIterator i = l->get_previous();
+        while (l < pivot) {
+            if (comparator(l.operator*(), piv)) {
+                ++i;
+                T temp = i.operator*();
+                *(i.elem) = l.operator*();
+                *(l.elem) = temp;
+            }
+            ++l;
+        }
+        ArrayIterator I = i;
+        ++I;
+        T temp = I.operator*();
+        *(I.elem) = piv;
+        *(pivot.elem) = temp;
+        return I;
+    }
+    void quick_sort(ArrayIterator start, ArrayIterator end, bool(*comparator)(const T&, const T&)) {
+        if (start < end) {
+            ArrayIterator pivot = partition(start, end, comparator);
+            ArrayIterator left = pivot;
+            ArrayIterator right = pivot;
+            --left;
+            ++right;
+            quick_sort(start, left, comparator);
+            quick_sort(right, end, comparator);
+        }
+    }
+    void _quick_sort(bool(*comparator)(const T&, const T&)) {
+        quick_sort(begin(), end(), comparator);
     }
 };
