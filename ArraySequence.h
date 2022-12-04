@@ -1,5 +1,7 @@
+#pragma once
+
 #include "Sequence.h"
-#include "DynamicArray.cpp"
+#include "DynamicArray.h"
 
 template <class T>
 class ArraySequence : public Sequence<T> {
@@ -7,7 +9,7 @@ private:
     DynamicArray<T>* items;
 public:
     ArraySequence(T* items, int count);
-    ArraySequence();
+    ArraySequence(int size);
     ArraySequence(const ArraySequence<T>& sequence);
     const T& get_first() override;
     const T& get_last() override;

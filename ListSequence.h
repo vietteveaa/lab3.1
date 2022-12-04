@@ -1,5 +1,7 @@
+#pragma once
+
 #include "Sequence.h"
-#include "LinkedList.cpp"
+#include "LinkedList.h"
 
 template <class T>
 class ListSequence : public Sequence<T> {

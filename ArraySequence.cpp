@@ -1,3 +1,4 @@
+#include "libs.h"
 #include "ArraySequence.h"
 
 template <class T>
@@ -6,15 +7,15 @@ ArraySequence<T>::ArraySequence(T* items, int count) {
     this->items = dynamic_array;
 }
 template <class T>
-ArraySequence<T>::ArraySequence() {
-    auto* array = new DynamicArray<T>();
+ArraySequence<T>::ArraySequence(int size) {
+    auto* array = new DynamicArray<T>(size);
     this->items = array;
 }
-template <class T>
+/*template <class T>
 ArraySequence<T>::ArraySequence(const ArraySequence<T>& sequence) {
     auto* array = new DynamicArray<T>(sequence.items, sequence.get_length());
     this->items = array;
-}
+}*/
 template <class T>
 const T& ArraySequence<T>::get_first() { return this->items->get(0); }
 template <class T>
@@ -23,7 +24,7 @@ template <class T>
 const T& ArraySequence<T>::get (int index) { return this->items->get(index); }
 template <class T>
 Sequence<T>* ArraySequence<T>::get_subSequence(int startIndex, int endIndex) {
-    auto* new_sequence = new ArraySequence();
+    auto* new_sequence = new ArraySequence(endIndex - startIndex + 1);
     int sub_array_size = endIndex - startIndex + 1;
     auto* sub_array = new DynamicArray<T>(sub_array_size);
     for (int i = 0; i < sub_array_size; ++i) { sub_array->set(i, this->items->get(startIndex + i)); }
@@ -40,14 +41,14 @@ void ArraySequence<T>::append(const T& item) { // const T& ???
         this->items->set_size(this->items->get_size() + 1);
     }
     else {
-        this->items->set(this->items->getsize(), item);
+        this->items->set(this->items->get_size(), item);
         this->items->set_size(this->items->get_size() + 1);
     }
 }
 template <class T>
 void ArraySequence<T>::prepend (const T& item) {
     this->items->resize(this->items->get_size() + 1);
-    for (int i = this-items->get_size() - 1; i > 0; --i) { this->items->set(i, this->items->get(i - 1)); }
+    for (int i = this->items->get_size() - 1; i > 0; --i) { this->items->set(i, this->items->get(i - 1)); }
     this->items->set(0, item);
 }
 template <class T>
@@ -61,7 +62,7 @@ void ArraySequence<T>::insert_at (const T& item, int index) {
 }
 template <class T>
 Sequence<T>* ArraySequence<T>::concat(Sequence<T>* list) {
-    auto* new_array_sequence = new ArraySequence;
+    auto* new_array_sequence = new ArraySequence(list->get_length());
     new_array_sequence->items = new DynamicArray<T>(this->items->get_size() + list->get_length());
     int count = this->items->get_size();
     for (int i = 0; i < count; ++i) {
