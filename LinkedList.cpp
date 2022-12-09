@@ -292,16 +292,16 @@ typename LinkedList<T>::Iterator LinkedList<T>::merge(Iterator f, Iterator s, bo
 
 template<class T>
 void LinkedList<T>::bubble_sort() {
-    /*int length = this->get_length();
-    for (int i = 0; i < length; ++i) {
-        for (int j = 0; j < length - 1; ++j) {
+    int size = this->get_length();
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size - 1; ++j) {
             if (this->get(j)->get_data() > this->get(j + 1)->get_data()) {
-                T& tmp = this->get(j)->get_data();
-                this->get(j)->set_data() = this->get(j + 1)->get_data();
-                this->get(j + 1)->set_data(tmp);
+                T& temp = this->get(j)->get_data();
+                this->get(j)->set_data(this->get(j + 1)->get_data());
+                this->get(j + 1)->set_data(temp);
             }
         }
-    }*/
+    }
 }
 
 //БЫСТРАЯ СОРТИРОВКА
