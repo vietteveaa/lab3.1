@@ -300,7 +300,7 @@ typename LinkedList<T>::Iterator LinkedList<T>::merge(Iterator f, Iterator s, bo
 //БАББЛ
 
 template <class T>
-Node<T>* swap (Node<T>* ptr1, Node<T>* ptr2) {
+Node<T>* LinkedList<T>::swap (Node<T>* ptr1, Node<T>* ptr2) {
     Node<T>* tmp = ptr2->get_next();
     ptr2->get_next()->set_previous(ptr1);
     ptr2->set_next(ptr1);
@@ -311,7 +311,7 @@ Node<T>* swap (Node<T>* ptr1, Node<T>* ptr2) {
     return ptr2;
 }
 template <class T>
-void bubble_sort(Node<T>** first, int count) {
+void LinkedList<T>::bubble_sort(Node<T>** first, int count) {
     Node<T>** link;
     int i, j, swapped;
     for (i = 0; i <= count; ++i) {
