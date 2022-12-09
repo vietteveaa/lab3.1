@@ -2,6 +2,14 @@
 #include "LinkedList.h"
 
 template <class T>
+Node<T>::Node(): data(0), nextp(nullptr), previousp(nullptr) {}
+template <class T>
+Node<T>::~Node() {
+    delete data;
+    delete nextp;
+    delete previousp;
+}
+template <class T>
 const T& Node<T>::get_data() { return this->data; }
 template <class T>
 void Node<T>::set_data(T item) { this->data = item; }
@@ -20,18 +28,21 @@ LinkedList<T>::LinkedList(T* items, int count) {
     if (count == 0) {
         first = nullptr;
         last = nullptr;
+        size = 0;
     }
     else {
         Node<T>* current = new Node<T>;
         first = current;
+        size = 0;
         for (int i = 0; i < count; i++) {
             current->set_data(items[i]);
             last = current;
             if (i != count - 1) {
                 Node<T>* new_node = new Node<T>;
                 current->set_next(new_node);
-                ++current;
+                current = current->get_next();
             }
+            size++;
         }
     }
 }
@@ -43,13 +54,14 @@ LinkedList<T>::LinkedList() {
     first->set_next(last);
     last->set_previous(first);
     last->set_next(nullptr);
+    size = 0;
 }
 
 template <class T>
 LinkedList<T>::LinkedList(LinkedList<T>& list) {//const
     auto* previous_elem = new Node<T>;
     Node<T>* elem = list.first;
-    int count = list.GetLenght();
+    int count = list.get_length();
     this->first = previous_elem;
     previous_elem->set_data(elem->get_data());
     elem = elem->get_next;
@@ -76,13 +88,7 @@ LinkedList<T>::~LinkedList() {
 
 template <class T>
 int LinkedList<T>::get_length() const {
-    int size = 1;
-    Node<T>* elem = this->first;
-    while (elem->get_next() != nullptr) {
-        elem = elem->get_next();
-        ++size;
-    }
-    return size;
+    return this->size;
 }
 
 template <class T>
@@ -119,6 +125,7 @@ void LinkedList<T>::append(const T& item) {
     old_last = this->last;
     old_last->set_next(new_last);
     this->last = new_last;
+    size++;
 }
 template <class T>
 void LinkedList<T>::prepend(const T& item) {
@@ -130,6 +137,7 @@ void LinkedList<T>::prepend(const T& item) {
     old_first = this->first;
     old_first->set_previous(new_first);
     this->first = new_first;
+    size++;
 }
 template <class T>
 void LinkedList<T>::insert_at(const T& item, int index) {
@@ -142,6 +150,7 @@ void LinkedList<T>::insert_at(const T& item, int index) {
     new_elem->set_previous(previous_elem);
     next_elem->set_previous(new_elem);
     previous_elem->set_next(new_elem);
+    size++;
 }
 template <class T>
 LinkedList<T>* LinkedList<T>::concat(LinkedList<T>* list) {
@@ -290,17 +299,35 @@ typename LinkedList<T>::Iterator LinkedList<T>::merge(Iterator f, Iterator s, bo
 
 //БАББЛ
 
-template<class T>
-void LinkedList<T>::bubble_sort() {
-    int size = this->get_length();
-    for (int i = 0; i < size; ++i) {
-        for (int j = 0; j < size - 1; ++j) {
-            if (this->get(j)->get_data() > this->get(j + 1)->get_data()) {
-                T temp = this->get(j)->get_data();
-                this->get(j)->set_data(this->get(j + 1)->get_data());
-                this->get(j + 1)->set_data(temp);
+template <class T>
+Node<T>* swap (Node<T>* ptr1, Node<T>* ptr2) {
+    Node<T>* tmp = ptr2->get_next();
+    ptr2->get_next()->set_previous(ptr1);
+    ptr2->set_next(ptr1);
+    ptr2->set_previous(ptr1->get_previous());
+    ptr1->get_previous()->set_next(ptr2);
+    ptr1->set_next(tmp);
+    ptr1->set_previous(ptr2);
+    return ptr2;
+}
+template <class T>
+void bubble_sort(Node<T>** first, int count) {
+    Node<T>** link;
+    int i, j, swapped;
+    for (i = 0; i <= count; ++i) {
+        link = first;
+        swapped = 0;
+        for (j = 0; j < count - i - 1; ++j) {
+            Node<T>* ptr1 = *link;
+            Node<T>* ptr2 = ptr1->get_next();
+            if (ptr1->get_data() > ptr2->get_data()) {
+                *link = swap(ptr1, ptr2);
+                swapped = 1;
             }
+            link = &(*link)->get_next();
         }
+        if (swapped == 0)
+            break;
     }
 }
 

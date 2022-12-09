@@ -7,6 +7,8 @@ private:
     Node<T>* previousp;
     Node<T>* nextp;
 public:
+    Node();
+    ~Node();
     const T& get_data();
     void set_data(T item);
     Node<T>* get_next();
@@ -19,6 +21,7 @@ class LinkedList {
 private:
     Node<T> *first;
     Node<T> *last;
+    int size;
 public:
     LinkedList(T *items, int count);
     LinkedList();
@@ -59,7 +62,8 @@ public:
     void merge_sort_(bool (*comparator)(const T&, const T&));
     Iterator merge(Iterator f, Iterator s, bool (*comparator)(const T&, const T&));
 
-    void bubble_sort();
+    Node<T>* swap(Node<T>*, Node<T>*);
+    void bubble_sort(Node<T>** first, int count);
 
     Iterator partition(Iterator head, Iterator tail, bool(*comparator)(const T&, const T&));
     void quick_sort(Iterator head, Iterator tail, bool(*comparator)(const T&, const T&));

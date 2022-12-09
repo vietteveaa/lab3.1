@@ -229,7 +229,7 @@ int main() {
 
                 file.open("comparison.csv", fstream::out | fstream::in | fstream::app);
                 //Количество элементов;Время работы алгоритма сортировки пузырьком;Время работы алгоритма быстрой сортировки;Время работы алгоритма сортировки слиянием
-                file << 50000 << ";" << time_span1.count() << ";" << time_span4.count() << ";" << time_span7.count() << ";" << "\n";
+//                file << 50000 << ";";............................................................................................l << time_span1.count() << ";" << time_span4.count() << ";" << time_span7.count() << ";" << "\n";
                 file << 60000 << ";" << time_span2.count() << ";" << time_span5.count() << ";" << time_span8.count() << ";" << "\n";
                 file << 70000 << ";" << time_span3.count() << ";" << time_span6.count() << ";" << time_span9.count() << ";" << "\n";
                 file.close();
