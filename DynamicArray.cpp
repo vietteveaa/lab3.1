@@ -22,6 +22,10 @@ DynamicArray<T>::DynamicArray(const DynamicArray<T>& dynamicArray) {
     this->capacity = dynamicArray.capacity;
     for (int i = 0; i < this->size; ++i) { this->array[i] = dynamicArray.array[i]; }
 }
+template<class T>
+DynamicArray<T>::~DynamicArray() {
+    delete[] array;
+}
 
 template <class T>
 const T& DynamicArray<T>::get(int index) { return this->array[index]; } // const T& где нужна копия
@@ -100,19 +104,21 @@ typename DynamicArray<T>::ArrayIterator DynamicArray<T>::end() { return ArrayIte
 
 template <class T>
 typename DynamicArray<T>::ArrayIterator DynamicArray<T>::find_middle (ArrayIterator begin, ArrayIterator end) {
-    if (begin == nullptr) { return nullptr; }
-    if(begin == end) { return end; }
-    ArrayIterator s = begin, f = begin;
-    ++f;
-    while (f != end) {
-        ++f;
-        if (f != end) {
-            ++s;
-            ++f;
+    if (begin == nullptr)
+        return nullptr;
+    ArrayIterator slow = begin, fast = begin;
+    ++fast;
+    if (begin == end)
+        return end;
+    while (fast != end) {
+        ++fast;
+        if (fast != end) {
+            ++slow;
+            ++fast;
         }
-        else ++s;
+        else ++slow;
     }
-    return s;
+    return slow;
 }
 template <class T>
 int DynamicArray<T>::real_index (ArrayIterator elem) {
@@ -127,7 +133,7 @@ int DynamicArray<T>::real_index (ArrayIterator elem) {
     //СЛИЯНИЕМ
 
 template <class T>
-void DynamicArray<T>::merge(ArrayIterator start, ArrayIterator middle, ArrayIterator end, bool(*comparator)(const T&, const T&)) {
+void DynamicArray<T>::merge(ArrayIterator start, ArrayIterator& middle, ArrayIterator end, bool(*comparator)(const T&, const T&)) {
     ArrayIterator front_trail = middle;
     int real = real_index(middle);
     ++front_trail;
@@ -139,8 +145,8 @@ void DynamicArray<T>::merge(ArrayIterator start, ArrayIterator middle, ArrayIter
     T* merged_array = new T[real_index(end) + 1];
     while (first_subarray_index <= first_subarray_length && second_subarray_index <= second_subarray_length) {
         if (comparator(second_subarray_index.operator*(), first_subarray_index.operator*())) {
-            *(merged_array + merged_array_index) = first_subarray_index.operator*();
-            ++first_subarray_index;
+            *(merged_array + merged_array_index) = second_subarray_index.operator*();
+            ++second_subarray_index;
         }
         else {
             *(merged_array + merged_array_index) = first_subarray_index.operator*();

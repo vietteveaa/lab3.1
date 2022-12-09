@@ -34,22 +34,12 @@ Sequence<T>* ArraySequence<T>::get_subSequence(int startIndex, int endIndex) {
 template <class T>
 int ArraySequence<T>::get_length() { return this->items->get_size(); }
 template <class T>
-void ArraySequence<T>::append(const T& item) { // const T& ???
-    if (this->items->get_size() == this->items->get_capacity()) {
-        this->items->resize(this->items->get_size() * 2);
-        this->items->set(this->items->get_size(), item);
-        this->items->set_size(this->items->get_size() + 1);
-    }
-    else {
-        this->items->set(this->items->get_size(), item);
-        this->items->set_size(this->items->get_size() + 1);
-    }
+void ArraySequence<T>::append(const T& item) {
+    this->insert_at(item, this->get_length());
 }
 template <class T>
 void ArraySequence<T>::prepend (const T& item) {
-    this->items->resize(this->items->get_size() + 1);
-    for (int i = this->items->get_size() - 1; i > 0; --i) { this->items->set(i, this->items->get(i - 1)); }
-    this->items->set(0, item);
+    this->insert_at(item, 0);
 }
 template <class T>
 void ArraySequence<T>::insert_at (const T& item, int index) {

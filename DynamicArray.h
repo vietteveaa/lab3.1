@@ -10,6 +10,7 @@ public:
     DynamicArray(T *items, int count);
     DynamicArray(int size);
     DynamicArray(const DynamicArray<T>& dynamicArray);
+    ~DynamicArray();
 
     const T &get(int index);
     int get_size();
@@ -44,7 +45,7 @@ public:
     ArrayIterator find_middle (ArrayIterator begin, ArrayIterator end);
     int real_index (ArrayIterator elem);
 
-    void merge(ArrayIterator start, ArrayIterator middle, ArrayIterator end, bool(*comparator)(const T&, const T&));
+    void merge(ArrayIterator start, ArrayIterator& middle, ArrayIterator end, bool(*comparator)(const T&, const T&));
     void merge_sort(ArrayIterator begin, ArrayIterator end, bool(*comparator)(const T&, const T&));
     void merge_sort_(bool(*comparator)(const T&, const T&));
 

@@ -23,6 +23,7 @@ public:
     LinkedList(T *items, int count);
     LinkedList();
     LinkedList(LinkedList<T>& list);
+    ~LinkedList();
 
     int get_length() const;
     Node<T>* get_first();

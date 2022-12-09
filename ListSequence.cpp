@@ -7,14 +7,11 @@ ListSequence<T>::ListSequence(T *items, int count) {
     this->linkedlist = list;
 }
 template <class T>
-ListSequence<T>::ListSequence() {
-    auto* list = new LinkedList<T>();
-    this->linkedlist - list;
-}
+ListSequence<T>::ListSequence() : linkedlist(new LinkedList<T>) {};
 template <class T>
 ListSequence<T>::ListSequence(const LinkedList<T> &sequence) {
     auto *list = new LinkedList<T>(sequence);
-    this->linkedlist - list;
+    this->linkedlist = list;
 }
 template <class T>
 const T& ListSequence<T>::get_first() { return this->linkedlist->get_first()->get_data(); }
