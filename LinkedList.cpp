@@ -296,7 +296,7 @@ void LinkedList<T>::bubble_sort() {
     for (int i = 0; i < size; ++i) {
         for (int j = 0; j < size - 1; ++j) {
             if (this->get(j)->get_data() > this->get(j + 1)->get_data()) {
-                T& temp = this->get(j)->get_data();
+                T temp = this->get(j)->get_data();
                 this->get(j)->set_data(this->get(j + 1)->get_data());
                 this->get(j + 1)->set_data(temp);
             }
