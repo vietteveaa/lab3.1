@@ -63,7 +63,7 @@ public:
     Iterator merge(Iterator f, Iterator s, bool (*comparator)(const T&, const T&));
 
     Node<T>* swap(Node<T>*, Node<T>*);
-    void bubble_sort(Node<T>** first, int count);
+    void bubble_sort(Node<T>** first, int count, bool(*comparator)(const T&, const T&));
 
     Iterator partition(Iterator head, Iterator tail, bool(*comparator)(const T&, const T&));
     void quick_sort(Iterator head, Iterator tail, bool(*comparator)(const T&, const T&));

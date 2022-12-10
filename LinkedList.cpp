@@ -311,7 +311,7 @@ Node<T>* LinkedList<T>::swap (Node<T>* ptr1, Node<T>* ptr2) {
     return ptr2;
 }
 template <class T>
-void LinkedList<T>::bubble_sort(Node<T>** first, int count) {
+void LinkedList<T>::bubble_sort(Node<T>** first, int count, bool(*comparator)(const T&, const T&)) {
     Node<T>** link;
     int i, j, swapped;
     for (i = 0; i <= count; ++i) {
@@ -324,7 +324,7 @@ void LinkedList<T>::bubble_sort(Node<T>** first, int count) {
                 *link = swap(ptr1, ptr2);
                 swapped = 1;
             }
-            link = &(*link)->get_next();
+            *link = (*link)->get_next();
         }
         if (swapped == 0)
             break;

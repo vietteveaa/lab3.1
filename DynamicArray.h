@@ -49,9 +49,9 @@ public:
     void merge_sort(ArrayIterator begin, ArrayIterator end, bool(*comparator)(const T&, const T&));
     void merge_sort_(bool(*comparator)(const T&, const T&));
 
-    void bubble_sort();
+    void bubble_sort(bool(*comparator)(const T&, const T&));
 
-    ArrayIterator partition(ArrayIterator l, ArrayIterator pivot, bool(*comparator)(const T&, const T&));
+    ArrayIterator partition(ArrayIterator begin, ArrayIterator end, bool(*comparator)(const T&, const T&));
     void quick_sort(ArrayIterator start, ArrayIterator end, bool(*comparator)(const T&, const T&));
     void _quick_sort(bool(*comparator)(const T&, const T&));
 };

@@ -15,12 +15,12 @@ void ISorter<T>::quick_sort(Sequence<T>* seq, bool(*comparator)(const T&, const 
     cout << endl;
 }
 template <class T>
-void ISorter<T>::bubble_sort(Sequence<T>* seq) {
+void ISorter<T>::bubble_sort(Sequence<T>* seq, bool(*comparator)(const T&, const T&)) {
     high_resolution_clock::time_point t_start, t_end;
     duration<double> time_span;
     message_before(seq);
     t_start = high_resolution_clock::now();
-    seq->bubble_sort();
+    seq->bubble_sort(comparator);
     t_end = high_resolution_clock::now();
     time_span = duration_cast<duration<double>>(t_end - t_start);
     message_after(seq);

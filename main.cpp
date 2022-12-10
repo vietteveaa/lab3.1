@@ -7,9 +7,15 @@
 #include "ArraySequence.cpp"
 
 int main() {
+    /*int arr[5] = {4, 3, 5, 2, 1};
+    ListSequence<int> l(arr, 5);
+    l.bubble_sort(comparator);
+    for (int i = 0; i < 5; ++i) {
+        cout << l.get(i) << " ";
+    }*/
     setlocale(LC_ALL, "Russian");
     srand(time(NULL));
-    int option0, option1, option2, option3;
+    int option0, option1, option2;
     int item, index, index_beginning, index_ending;
     int length = 0;
 
@@ -25,8 +31,8 @@ int main() {
     duration<double> time_span1, time_span2, time_span3, time_span4, time_span5, time_span6, time_span7, time_span8, time_span9;
 
     int array[1] = {0};
-    ListSequence<int> list(array, 1);
-    Sequence<int>* sequence = &list;
+    ListSequence<int> seq(array, 1);
+    Sequence<int>* sequence = &seq;
 
     int* items1 = new int[50000];
     for (int i = 0; i < 50000; i++)
@@ -158,7 +164,7 @@ int main() {
                 cout << endl;
                 switch (option2) {
                     case 1:
-                        tmp.bubble_sort(sequence);
+                        tmp.bubble_sort(sequence, comparator);
                         cout << endl;
                         break;
                     case 2:
@@ -212,24 +218,24 @@ int main() {
 
                 //сортировка пузырьком
                 t_start = high_resolution_clock::now();
-                sequence_ex1_bis->bubble_sort();
+                sequence_ex1_bis->bubble_sort(comparator);
                 t_end = high_resolution_clock::now();
                 time_span1 = duration_cast<duration<double>>(t_end - t_start);
 
                 t_start = high_resolution_clock::now();
-                sequence_ex2_bis->bubble_sort();
+                sequence_ex2_bis->bubble_sort(comparator);
                 t_end = high_resolution_clock::now();
                 time_span2 = duration_cast<duration<double>>(t_end - t_start);
 
                 t_start = high_resolution_clock::now();
-                sequence_ex3_bis->bubble_sort();
+                sequence_ex3_bis->bubble_sort(comparator);
                 t_end = high_resolution_clock::now();
                 time_span3 = duration_cast<duration<double>>(t_end - t_start);
 
 
                 file.open("comparison.csv", fstream::out | fstream::in | fstream::app);
                 //Количество элементов;Время работы алгоритма сортировки пузырьком;Время работы алгоритма быстрой сортировки;Время работы алгоритма сортировки слиянием
-//                file << 50000 << ";";............................................................................................l << time_span1.count() << ";" << time_span4.count() << ";" << time_span7.count() << ";" << "\n";
+                file << 50000 << ";" << time_span1.count() << ";" << time_span4.count() << ";" << time_span7.count() << ";" << "\n";
                 file << 60000 << ";" << time_span2.count() << ";" << time_span5.count() << ";" << time_span8.count() << ";" << "\n";
                 file << 70000 << ";" << time_span3.count() << ";" << time_span6.count() << ";" << time_span9.count() << ";" << "\n";
                 file.close();

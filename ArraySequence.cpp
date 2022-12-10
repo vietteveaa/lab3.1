@@ -71,8 +71,8 @@ void ArraySequence<T>::merge_sort_(bool(*comparator)(const T&, const T&)) {
     this->items->merge_sort_(comparator);
 }
 template <class T>
-void ArraySequence<T>::bubble_sort() {
-    this->items->bubble_sort();
+void ArraySequence<T>::bubble_sort(bool(*comparator)(const T&, const T&)) {
+    this->items->bubble_sort(comparator);
 }
 template <class T>
 void ArraySequence<T>::_quick_sort(bool(*comparator)(const T&, const T&)) {

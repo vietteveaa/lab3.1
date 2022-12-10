@@ -72,8 +72,9 @@ typename DynamicArray<T>::ArrayIterator& DynamicArray<T>::ArrayIterator::operato
 }
 template <class T>
 typename DynamicArray<T>::ArrayIterator DynamicArray<T>::ArrayIterator::operator++(int) {
+    ArrayIterator result = *this;
     ++(*this);
-    return *this;
+    return result;
 }
 template <class T>
 typename DynamicArray<T>::ArrayIterator& DynamicArray<T>::ArrayIterator::operator--() {
@@ -82,8 +83,9 @@ typename DynamicArray<T>::ArrayIterator& DynamicArray<T>::ArrayIterator::operato
 }
 template <class T>
 typename DynamicArray<T>::ArrayIterator DynamicArray<T>::ArrayIterator::operator--(int) {
+    ArrayIterator result = *this;
     --(*this);
-    return *this;
+    return result;
 }
 template <class T>
 bool DynamicArray<T>::ArrayIterator::operator==(const ArrayIterator& to_compare) { return this->elem==to_compare.elem; }
@@ -124,7 +126,8 @@ template <class T>
 int DynamicArray<T>::real_index (ArrayIterator elem) {
     int counter = 0;
     for (ArrayIterator ptr = array; ptr < end(); ++ptr) {
-        if (ptr == elem) { return counter - 1; }
+        if (ptr == elem)
+            return counter - 1;
         ++counter;
     }
     return -1;
@@ -189,7 +192,7 @@ void DynamicArray<T>::merge_sort_(bool(*comparator)(const T&, const T&)) {
     //БАББЛ
 
 template <class T>
-void DynamicArray<T>::bubble_sort() {
+void DynamicArray<T>::bubble_sort(bool(*comparator)(const T&, const T&)) {
     for (int i = 0; i < size; ++i) {
         for (int j = 0; j < size - 1; ++j) {
             if (array[j] > array[j + 1]) {
